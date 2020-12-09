@@ -1,6 +1,6 @@
 >> DEBUG:
 12-6 LJ parameters from [JPCC 2008,112,17281–17290]:
-		metal  r0  epsilon  A     B
+	metal  r0  epsilon  A     B
         Ag   2.955 4.56 2021000  6072, 
         Al   2.925 4.02 1577000  5035, 
         Au   2.951 5.29 2307000  6987, 
