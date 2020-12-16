@@ -42,3 +42,10 @@ For gromos forcefield of gromacs:
    Pb       0.0503323     5.16623e-05
    Pd       0.0258266     6.48049e-06
    Pt       0.0346107     9.17643e-06
+   
+append:
+TiO2 12-6 LJ parameters from Journal of Chemical Physics, 2015, 142(23):2891-2959.
+#elements   sigma(nm) epsilon(kJ/mol)
+   TI     1.95998e-01    2.42672
+   O      2.88651e-01    1.29704
+   
