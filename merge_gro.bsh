@@ -1,0 +1,22 @@
+#!/bin/bash
+# A script for merging two gro file, box information comes from the first one
+
+pro=$1
+lig=$2
+comp=$3
+
+[[ $# -lt 2 ]] && { echo -e "\nUsage:\n\t$0 pro.gro lig.gro [merged.gro]"; exit;}
+[[ -z $comp ]] && { comp="complex.gro"; }
+
+n1=`head -n2 $pro |tail -1`
+n2=`head -n2 $lig |tail -1`
+
+let natoms=n1+n2
+echo -e "\nTotal natoms of Protein and Ligand: " $natoms
+
+echo -e "Complex\n$natoms"          > $comp
+head -n $((n1+2)) $pro |tail -n $n1 >> $comp
+head -n $((n2+2)) $lig |tail -n $n2 >> $comp
+tail -1 $pro                        >> $comp
+
+echo -e "\nComplex file ($comp) have been generated successfully!"
