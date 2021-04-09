@@ -1,0 +1,46 @@
+#!/bin/bash
+
+useDH=1; useTS=1; beg=0; end=999999999; skip=1
+trj=traj.xtc; tpr=topol.tpr; ndx=index.ndx
+com=Complex;  pro=Protein;   lig=Ligand
+gmx=gmx
+
+Usage()
+{
+    echo -e "
+    Usage:
+        $0 [-f [<.xtc/.trr/...>]] [-s [<.tpr>]] [-n [<.ndx>]]
+           [-b <time>] [-e <time>] [-skip <int>] [-com/-c <string>]
+           [-pro/-p <string>] [-lig/-l <string>] [-gmx/-g <gmx/gmx_d>]
+           [-cou <dh>] [-ts <ie>]
+    "
+}
+
+while true
+do
+    case $1 in
+        -h | --help) Usage;     exit  0 ;;
+        -f)          trj=$2;    shift 2 ;;
+        -s)          tpr=$2;    shift 2 ;;
+        -n)          ndx=$2;    shift 2 ;;
+        -b)          beg=$2;    shift 2 ;;
+        -e)          end=$2;    shift 2 ;;
+        -skip)       skip=$2;   shift 2 ;;
+        -com | -c)   com=$2;    shift 2 ;;
+        -pro | -p)   pro=$2;    shift 2 ;;
+        -lig | -l)   lig=$2;    shift 2 ;;
+        -cou)        useDH=1;   shift 2 ;;
+        -ts)         useTS=1;   shift 2 ;;
+        -gmx | -g)   gmx=$2;    shift 2 ;;
+        *)                      break   ;;
+    esac
+done
+
+if [[ $beg -ne 0 ]] || [[ $end -ne 999999999 ]] || [[ $skip -ne 1 ]]; then
+    echo 0 |$gmx trjconv -f $trj -s $tpr -n $ndx -b $beg -e $end -skip $skip -o ${trj%.*}_.xtc
+    trj=${trj%.*}_.xtc
+fi
+
+bash gmx_mmpbsa.bsh -f $trj -s $tpr -n $ndx -com $com -pro $pro -lig $lig -cou dh -ts ie
+
+
