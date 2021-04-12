@@ -11,3 +11,9 @@ __NOTE__ If you use cp2k output xyz file within time stamp [fs] in comment line,
 
 This file includes some metal vdw parameters for simulation in gromacs.
 
+* parser_gmx_mmpbsa.bsh
+A parser from gmx_mmpbsa.bsh script developed by Jichun Li
+
+* merge_gro.bsh
+A very simple shell script for merging two gro files such as protein and ligand.
+
