@@ -14,7 +14,7 @@ This file includes some metal vdw parameters for simulation in gromacs.
 
 * parser_gmx_mmpbsa.bsh [SHELL]
 
-A parser from gmx_mmpbsa.bsh script developed by Jichun Li
+A parser for gmx_mmpbsa.bsh script developed by Jichun Li
 
 * merge_gro.bsh [SHELL]
 
