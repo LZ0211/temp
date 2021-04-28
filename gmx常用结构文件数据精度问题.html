@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>gmx常用结构文件数据精度问题</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">
+/* GitHub stylesheet for MarkdownPad (http://markdownpad.com) */
+/* Author: Nicolas Hery - http://nicolashery.com */
+/* Version: b13fe65ca28d2e568c6ed5d7f06581183df8f2ff */
+/* Source: https://github.com/nicolahery/markdownpad-github */
+
+/* RESET
+=============================================================================*/
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+/* BODY
+=============================================================================*/
+
+body {
+  font-family: Helvetica, arial, freesans, clean, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #333;
+  background-color: #fff;
+  padding: 20px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+body>*:first-child {
+  margin-top: 0 !important;
+}
+
+body>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* BLOCKS
+=============================================================================*/
+
+p, blockquote, ul, ol, dl, table, pre {
+  margin: 15px 0;
+}
+
+/* HEADERS
+=============================================================================*/
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1 tt, h1 code, h2 tt, h2 code, h3 tt, h3 code, h4 tt, h4 code, h5 tt, h5 code, h6 tt, h6 code {
+  font-size: inherit;
+}
+
+h1 {
+  font-size: 28px;
+  color: #000;
+}
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #ccc;
+  color: #000;
+}
+
+h3 {
+  font-size: 18px;
+}
+
+h4 {
+  font-size: 16px;
+}
+
+h5 {
+  font-size: 14px;
+}
+
+h6 {
+  color: #777;
+  font-size: 14px;
+}
+
+body>h2:first-child, body>h1:first-child, body>h1:first-child+h2, body>h3:first-child, body>h4:first-child, body>h5:first-child, body>h6:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+h1+p, h2+p, h3+p, h4+p, h5+p, h6+p {
+  margin-top: 10px;
+}
+
+/* LINKS
+=============================================================================*/
+
+a {
+  color: #4183C4;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* LISTS
+=============================================================================*/
+
+ul, ol {
+  padding-left: 30px;
+}
+
+ul li > :first-child, 
+ol li > :first-child, 
+ul li ul:first-of-type, 
+ol li ol:first-of-type, 
+ul li ol:first-of-type, 
+ol li ul:first-of-type {
+  margin-top: 0px;
+}
+
+ul ul, ul ol, ol ol, ol ul {
+  margin-bottom: 0;
+}
+
+dl {
+  padding: 0;
+}
+
+dl dt {
+  font-size: 14px;
+  font-weight: bold;
+  font-style: italic;
+  padding: 0;
+  margin: 15px 0 5px;
+}
+
+dl dt:first-child {
+  padding: 0;
+}
+
+dl dt>:first-child {
+  margin-top: 0px;
+}
+
+dl dt>:last-child {
+  margin-bottom: 0px;
+}
+
+dl dd {
+  margin: 0 0 15px;
+  padding: 0 15px;
+}
+
+dl dd>:first-child {
+  margin-top: 0px;
+}
+
+dl dd>:last-child {
+  margin-bottom: 0px;
+}
+
+/* CODE
+=============================================================================*/
+
+pre, code, tt {
+  font-size: 12px;
+  font-family: Consolas, "Liberation Mono", Courier, monospace;
+}
+
+code, tt {
+  margin: 0 0px;
+  padding: 0px 0px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px;
+}
+
+pre>code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent;
+}
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #ccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px;
+}
+
+pre code, pre tt {
+  background-color: transparent;
+  border: none;
+}
+
+kbd {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: #DDDDDD;
+    background-image: linear-gradient(#F1F1F1, #DDDDDD);
+    background-repeat: repeat-x;
+    border-color: #DDDDDD #CCCCCC #CCCCCC #DDDDDD;
+    border-image: none;
+    border-radius: 2px 2px 2px 2px;
+    border-style: solid;
+    border-width: 1px;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    line-height: 10px;
+    padding: 1px 4px;
+}
+
+/* QUOTES
+=============================================================================*/
+
+blockquote {
+  border-left: 4px solid #DDD;
+  padding: 0 15px;
+  color: #777;
+}
+
+blockquote>:first-child {
+  margin-top: 0px;
+}
+
+blockquote>:last-child {
+  margin-bottom: 0px;
+}
+
+/* HORIZONTAL RULES
+=============================================================================*/
+
+hr {
+  clear: both;
+  margin: 15px 0;
+  height: 0px;
+  overflow: hidden;
+  border: none;
+  background: transparent;
+  border-bottom: 4px solid #ddd;
+  padding: 0;
+}
+
+/* TABLES
+=============================================================================*/
+
+table th {
+  font-weight: bold;
+}
+
+table th, table td {
+  border: 1px solid #ccc;
+  padding: 6px 13px;
+}
+
+table tr {
+  border-top: 1px solid #ccc;
+  background-color: #fff;
+}
+
+table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+/* IMAGES
+=============================================================================*/
+
+img {
+  max-width: 100%
+}
+</style>
+<style type="text/css">
+.highlight  { background: #ffffff; }
+.highlight .c { color: #999988; font-style: italic } /* Comment */
+.highlight .err { color: #a61717; background-color: #e3d2d2 } /* Error */
+.highlight .k { font-weight: bold } /* Keyword */
+.highlight .o { font-weight: bold } /* Operator */
+.highlight .cm { color: #999988; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #999999; font-weight: bold } /* Comment.Preproc */
+.highlight .c1 { color: #999988; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #999999; font-weight: bold; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #000000; background-color: #ffdddd } /* Generic.Deleted */
+.highlight .gd .x { color: #000000; background-color: #ffaaaa } /* Generic.Deleted.Specific */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .gr { color: #aa0000 } /* Generic.Error */
+.highlight .gh { color: #999999 } /* Generic.Heading */
+.highlight .gi { color: #000000; background-color: #ddffdd } /* Generic.Inserted */
+.highlight .gi .x { color: #000000; background-color: #aaffaa } /* Generic.Inserted.Specific */
+.highlight .go { color: #888888 } /* Generic.Output */
+.highlight .gp { color: #555555 } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #aaaaaa } /* Generic.Subheading */
+.highlight .gt { color: #aa0000 } /* Generic.Traceback */
+.highlight .kc { font-weight: bold } /* Keyword.Constant */
+.highlight .kd { font-weight: bold } /* Keyword.Declaration */
+.highlight .kp { font-weight: bold } /* Keyword.Pseudo */
+.highlight .kr { font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #445588; font-weight: bold } /* Keyword.Type */
+.highlight .m { color: #009999 } /* Literal.Number */
+.highlight .s { color: #d14 } /* Literal.String */
+.highlight .na { color: #008080 } /* Name.Attribute */
+.highlight .nb { color: #0086B3 } /* Name.Builtin */
+.highlight .nc { color: #445588; font-weight: bold } /* Name.Class */
+.highlight .no { color: #008080 } /* Name.Constant */
+.highlight .ni { color: #800080 } /* Name.Entity */
+.highlight .ne { color: #990000; font-weight: bold } /* Name.Exception */
+.highlight .nf { color: #990000; font-weight: bold } /* Name.Function */
+.highlight .nn { color: #555555 } /* Name.Namespace */
+.highlight .nt { color: #000080 } /* Name.Tag */
+.highlight .nv { color: #008080 } /* Name.Variable */
+.highlight .ow { font-weight: bold } /* Operator.Word */
+.highlight .w { color: #bbbbbb } /* Text.Whitespace */
+.highlight .mf { color: #009999 } /* Literal.Number.Float */
+.highlight .mh { color: #009999 } /* Literal.Number.Hex */
+.highlight .mi { color: #009999 } /* Literal.Number.Integer */
+.highlight .mo { color: #009999 } /* Literal.Number.Oct */
+.highlight .sb { color: #d14 } /* Literal.String.Backtick */
+.highlight .sc { color: #d14 } /* Literal.String.Char */
+.highlight .sd { color: #d14 } /* Literal.String.Doc */
+.highlight .s2 { color: #d14 } /* Literal.String.Double */
+.highlight .se { color: #d14 } /* Literal.String.Escape */
+.highlight .sh { color: #d14 } /* Literal.String.Heredoc */
+.highlight .si { color: #d14 } /* Literal.String.Interpol */
+.highlight .sx { color: #d14 } /* Literal.String.Other */
+.highlight .sr { color: #009926 } /* Literal.String.Regex */
+.highlight .s1 { color: #d14 } /* Literal.String.Single */
+.highlight .ss { color: #990073 } /* Literal.String.Symbol */
+.highlight .bp { color: #999999 } /* Name.Builtin.Pseudo */
+.highlight .vc { color: #008080 } /* Name.Variable.Class */
+.highlight .vg { color: #008080 } /* Name.Variable.Global */
+.highlight .vi { color: #008080 } /* Name.Variable.Instance */
+.highlight .il { color: #009999 } /* Literal.Number.Integer.Long */
+.pl-c {
+    color: #969896;
+}
+
+.pl-c1,.pl-mdh,.pl-mm,.pl-mp,.pl-mr,.pl-s1 .pl-v,.pl-s3,.pl-sc,.pl-sv {
+    color: #0086b3;
+}
+
+.pl-e,.pl-en {
+    color: #795da3;
+}
+
+.pl-s1 .pl-s2,.pl-smi,.pl-smp,.pl-stj,.pl-vo,.pl-vpf {
+    color: #333;
+}
+
+.pl-ent {
+    color: #63a35c;
+}
+
+.pl-k,.pl-s,.pl-st {
+    color: #a71d5d;
+}
+
+.pl-pds,.pl-s1,.pl-s1 .pl-pse .pl-s2,.pl-sr,.pl-sr .pl-cce,.pl-sr .pl-sra,.pl-sr .pl-sre,.pl-src,.pl-v {
+    color: #df5000;
+}
+
+.pl-id {
+    color: #b52a1d;
+}
+
+.pl-ii {
+    background-color: #b52a1d;
+    color: #f8f8f8;
+}
+
+.pl-sr .pl-cce {
+    color: #63a35c;
+    font-weight: bold;
+}
+
+.pl-ml {
+    color: #693a17;
+}
+
+.pl-mh,.pl-mh .pl-en,.pl-ms {
+    color: #1d3e81;
+    font-weight: bold;
+}
+
+.pl-mq {
+    color: #008080;
+}
+
+.pl-mi {
+    color: #333;
+    font-style: italic;
+}
+
+.pl-mb {
+    color: #333;
+    font-weight: bold;
+}
+
+.pl-md,.pl-mdhf {
+    background-color: #ffecec;
+    color: #bd2c00;
+}
+
+.pl-mdht,.pl-mi1 {
+    background-color: #eaffea;
+    color: #55a532;
+}
+
+.pl-mdr {
+    color: #795da3;
+    font-weight: bold;
+}
+
+.pl-mo {
+    color: #1d3e81;
+}
+.task-list {
+padding-left:10px;
+margin-bottom:0;
+}
+
+.task-list li {
+    margin-left: 20px;
+}
+
+.task-list-item {
+list-style-type:none;
+padding-left:10px;
+}
+
+.task-list-item label {
+font-weight:400;
+}
+
+.task-list-item.enabled label {
+cursor:pointer;
+}
+
+.task-list-item+.task-list-item {
+margin-top:3px;
+}
+
+.task-list-item-checkbox {
+display:inline-block;
+margin-left:-20px;
+margin-right:3px;
+vertical-align:1px;
+}
+</style>
+</head>
+<body>
+<p><strong>Yujie Liu</strong><br><strong>2021.04.27</strong></p>
+<h2 id="-">常用格式简介</h2>
+<p>一般用于GROMACS模拟的结构文件格式包括<code>gro</code>, <code>pdb</code>和<code>g96</code>这三种，前两种用的最多也最为频繁。</p>
+<ol>
+<li><code>pdb</code>格式全称为<strong>Protein Data Bank</strong>，顾名思义在蛋白数据库中用的非常多，记录的信息也非常全面，当然一般在GROMACS中用到无非是晶胞参数[CRYST1]，残基名称，原子名，坐标，元素名，温度因子等</li><li><code>gro</code>格式全称为<strong>Gromos87</strong>，记录的信息要比<code>pdb</code>格式少很多，一般我们关注的与上面提到的类似</li><li><code>g96</code>格式全称为<strong>GROMOS-96</strong>，记录信息和<code>gro</code>差不多，分为结构和轨迹两类</li></ol>
+<h2 id="-">数据精度详解</h2>
+<p>一般而言，对于其他部分都相对固定，比如残基名，原子名等等。但是由于它们都是固定格式，不像<code>xyz</code>格式那样自由，因此精度也各不相同。</p>
+<ol>
+<li><code>pdb</code>格式坐标单位为<strong>Å</strong>，位宽为8，因此总共x、y、z坐标占24位长度，默认采用的是8.3f的格式，因此精度达到0.001 <strong>Å</strong></li><li><code>gro</code>格式坐标单位为<strong>nm</strong>, 默认输出位宽为8，因此总共x、y、z坐标占24位长度，默认采用的是8.3f的格式，因此精度达到0.001 <strong>nm</strong>，比<code>pdb</code>要低</li><li><code>g96</code>格式坐标单位为<strong>nm</strong>，输出位宽为15，因此总共占据45位长度，采用%15.9lf的格式，因此精度达到了1E-9 <strong>nm</strong></li></ol>
+<p><strong>GROMACS处理这几类格式坐标的区别：</strong><br>知道了每一类格式的内容，那么GROMACS分别是如何来读写这几类坐标的呢？</p>
+<ol>
+<li><p><code>pdb</code>格式而言，GROMACS的读取策略是固定位每8位宽一组，连续读取三组然后得到xyz坐标，最后转换成<strong>nm</strong>，具体实现<strong>C</strong>代码如下:</p>
+<pre><code class="lang-C"> char nc = &#39;\0&#39;;
+ for (k = 0; (k &lt; 8); k++, j++)
+ {
+     xc[k] = line[j];
+ }
+ xc[k] = nc;
+ for (k = 0; (k &lt; 8); k++, j++)
+ {
+     yc[k] = line[j];
+ }
+ yc[k] = nc;
+ for (k = 0; (k &lt; 8); k++, j++)
+ {
+     zc[k] = line[j];
+ }
+ zc[k] = nc;
+ x[natom][XX] = strtod(xc, nullptr)*0.1;
+ x[natom][YY] = strtod(yc, nullptr)*0.1;
+ x[natom][ZZ] = strtod(zc, nullptr)*0.1;
+</code></pre>
+<p>因此可以看出如果是你自己写代码弄成<code>pdb</code>格式，只要保存的是固定位8位，精度[小数点]可以自己取，即使x、y、z精度不同gmx也是能读的。<br>然而gmx写<code>pdb</code>格式的坐标部分严格按照<code>%8.3f%8.3f%8.3f</code>的格式，因此如果你一开始本身坐标位宽超过了8，写出来的坐标部分就会<strong>错位！</strong></p>
+</li><li><p><code>gro</code>格式而言，GROMACS的读取方式是首先根据第一行坐标的小数点间隔位宽来确定读取的gro中的数据精度数多少，比如如果给的<code>gro</code>文件的坐标部分采用的是<code>%8.3f%8.3f%8.3f</code>，那么小数点位宽间隔就是8，然后gmx得到的精度就是8-5=3，因此为1E-3 <strong>nm</strong>。<strong>注意: </strong>如果你自己通过编程创建的坐标非常的大，某个维度数值非小数部分超过了4位数[默认8-(1+3)=4]，比如<strong>12459.236</strong>或者有负数的情况下<strong>-1212.123</strong>，该数字的总位宽就超过了8，所以默认的<code>%8.3f%8.3f%8.3f</code>就不再正确，固定格式发生了错位。如果这一行xyz三个坐标<strong>不是</strong>全部都是三位小数和相同位宽，且位于首行，那么gmx就会报错：</p>
+<pre><code>The spacing of the decimal points in file xxx.gro is not consistent for x, y and z
+</code></pre><p>即使你第一行符合<code>%8.3f%8.3f%8.3f</code>，gmx此时确认精度为1E-3 <strong>nm</strong>，但后面不符合的依然是采用的第一行的8位位宽来固定读取数据，因此这部分数据实际读取的就是错误的。<br>针对以上罕见错误[数据值太大引起的]，如果自己编程，最好是采用变精度方式来进行写坐标，比如坐标格式控制的那部分用<code>%15.6lf%15.6lf%15.6lf</code>，这样不仅位宽提升，数据实际精度变成了1E-6 <strong>nm</strong>, 且非小数部分的数值也达到了8位数[15-(1+6)=8]，注意一定要保证每一行的坐标都用相同格式！！<br>GROMACS所有写<code>gro</code>操作均采用<code>%8.3f%8.3f%8.3f</code>，因此数据值过大会使得固定格式错位。<strong>注意：</strong>如果你一开始采用的变精度方式作为输入结构文件进行<code>pdb2gmx</code>等操作，然后得到一个输出gro文件，此时的格式就只是<code>%8.3f%8.3f%8.3f</code>，对于大数据任然会<strong>部分</strong>错位的哦！！！！！因此下一步使用该文件之前一定要处理一下！！！！</p>
+</li><li><p><code>g96</code>格式而言，GROMACS的读取格式为<code>%15lf%15lf%15lf</code>，而g96写格式统一为<code>%15.9f%15.9f%15.9f</code>，因此实际数据精度可以达到1E-9 <strong>nm</strong>，但是如前面说的它使用的是<code>%15lf%15lf%15lf</code>方式读取坐标部分，这样如果坐标数据出现若干空格[数据差异非常大的时候]，那么实际读取的值也会出错，比如<code>4.783000000999998.562000000     3.112000000</code>这一种极端值gmx会读取失误。当然常规MD情况是不会的</p>
+</li></ol>
+<h2 id="-">使用情形</h2>
+<ol>
+<li><code>pdb</code>一般用于蛋白，小分子均可</li><li><code>gro</code>一般用于小分子，变精度格式可以用于极端坐标值情况</li><li><code>g96</code>一般用于蛋白，小分子均可，进度非常高，比如进行一些参数拟合过程也可以</li></ol>
+<h2 id="-">各自缺点</h2>
+<ol>
+<li><code>pdb</code>冗余信息可能太多，格式控制复杂一些</li><li><code>gro</code>默认的精度比较低[0.001 <strong>nm</strong>]</li><li><code>g96</code>高精度会导致占用空间太大，特别是用作轨迹</li></ol>
+<h2 id="-">小结</h2>
+<p>综上，出现坐标乱的极端情况就是数据太大或者太小的原因，因此自己最开始建模的时候就要劲量不要让某个维度的坐标位宽溢出。如果实在是不得已，最好就采用变精度<code>gro</code>格式，虽然降低<code>pdb</code>格式坐标精度以换取可用非小数位宽上限的方式也可以。</p>
+
+</body>
+</html>
+<!-- This document was created with MarkdownPad, the Markdown editor for Windows (http://markdownpad.com) -->
