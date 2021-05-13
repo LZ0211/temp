@@ -1,0 +1,65 @@
+#!/bin/bash
+#Created by Yujie Liu
+#Date 2021.05.13
+
+Ion=$1
+Type=$2
+WatModel=$3
+
+Usage() {
+    echo "
+    HFE  <-----> Hydration free energy
+    IOD  <-----> ﬁrst solvation shell
+    CN   <-----> coordination number
+    Usage:
+    $0  Ion[Mg,Cu,...]  Type[HFE,IOD,CN]  WatModel[TIP3P,SPCE,TIP4PEW]
+
+    Example:
+    $0  Mg  HFE  TIP3P
+    "
+
+}
+
+[[ $# -lt 3 ]] && { Usage; exit 1; }
+
+awk -v Ion=$Ion -v Type=$Type -v WatModel=$WatModel '
+    BEGIN {
+        Type     = toupper(Type)
+        WatModel = toupper(WatModel)
+        Model = WatModel~"TIP3P"? 1 :\
+                WatModel~"SPC"?   2 :\
+                WatModel~"TIP4"?  3 : 0
+#        print Model
+    }
+
+    {
+        if ($0 ~ Type && $0 ~ "eps")
+        {
+            while (getline>0)
+            {
+                if ($0 ~ Ion)
+                {
+                    n = split($0, txt, " ")
+                    if (n > 3)
+                    {
+                        sigma = $(Model*2)
+                        eps   = $(Model*2+1)
+                    }
+                    else
+                    {
+                        sigma = $2
+                        eps   = $3
+                    }
+#                    print sigma, eps
+                    printf("\n>>> Result <<<\n"\
+                           "Ion name:   %s2+\n"\
+                           "WaterModel: %s\n"\
+                           "sigma:    %12.8lf (nm)\n"\
+                           "eps:      %12.8lf (kJ/mol)\n",
+                           Ion, WatModel, sigma*2*2^(-1.0/6.0)/10.0, eps*4.184)
+                    break
+                }
+            }
+        }
+    }
+' Merz_data.dat
