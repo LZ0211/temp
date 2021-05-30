@@ -1,0 +1,15 @@
+******************LOG*******************
+setp      = 2
+interval  = 0.200000
+tpr       = pull.tpr
+xtc       = pp.xtc
+ndx       = index.ndx
+groupA    = p1
+groupB    = p2
+gmx       = gmx
+inputfile = summary_distances.dat
+pull_type = distance
+outdist   = outdistance.dat
+outbatch  = do_batch.bsh
+
+**********Normal termination***********
