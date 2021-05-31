@@ -1,4 +1,6 @@
 ******************LOG*******************
+>> Current Time: Mon May 31 15:30:26 2021
+
 setp      = 2
 interval  = 0.200000
 tpr       = pull.tpr
@@ -7,9 +9,10 @@ ndx       = index.ndx
 groupA    = p1
 groupB    = p2
 gmx       = gmx
+linux     = 0
 inputfile = summary_distances.dat
 pull_type = distance
 outdist   = outdistance.dat
-outbatch  = do_batch.bsh
+outbatch  = do_batch.bat
 
 **********Normal termination***********
