@@ -1,5 +1,15 @@
 ## Put some temporary files for sharing
 
+* rtp2gro.exe [Windows]
+
+Convert gromacs rtp file to fake gro file, then you can execute gmx pdb2gmx, gmx grompp, gmx mdrun commands to create a correct molecular structure file.
+
+* Gen_Mix_Membrane.exe[Windows]
+
+An improved gmxmixmem programmed by Tian Lu plus version, it Can use linear molecules without align to Z axis directly, only need indicate in input.txt file on each pdb file line, the last number.  A non-zero integer represents do align to Z axis according to the farthest two atoms vector, zero or 
+empty represent you need align it manually, other values represent vector reversal compared to 1.
+
+
 * cp2k2gro.exe [Windows]
 
 This is a simple program, it can read a general xyz trajectory file then generate a gro/xtc trajectory [out.gro] for gromacs tool analysis.
