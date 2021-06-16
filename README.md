@@ -1,5 +1,9 @@
 ## Put some temporary files for sharing
 
+* US_Script
+
+A very convenient tool for Umbrella Sample of gromacs, can genereate bash script or windows batch script to do simulation
+
 * rtp2gro.exe [Windows]
 
 Convert gromacs rtp file to fake gro file, then you can execute gmx pdb2gmx, gmx grompp, gmx mdrun commands to create a correct molecular structure file.
